@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Project/css/style.css">
+
+    <title> Atividade 1 - PACMAN</title>
+</head>
+<body>
+
+    <h1>Projeto 01- Busca em Pac-Man</h1>
+
+    <blockquote>
+        <center> <img src="project/img/pacman.jpg" width="400px"> </center>
+        <p> <cite><center>Todas as paredes azuis estão ensinando ao Pec-Man a procurar.</center></cite> </p>
+    </blockquote>
+
+    <h3>Introdução</h3>
+    <p>Neste projeto, seu agente Pac-Man encontrará caminhos através de seu mundo labiríntico, tanto para chegar a um determinado local quanto para coletar alimentos de forma eficiente. Você construirá algoritmos gerais de pesquisa e os aplicará a cenários de Pac-Man.</p>
+
+    <p>O código para este projeto consiste em vários arquivos Python, alguns dos quais você precisará ler e entender para concluir a tarefa e alguns dos quais você pode ignorar. Você pode baixar todo o código e arquivos de suporte (incluindo esta descrição) como um <a href="search.zip">arquivo zip.</a></p>
+
+
+    <table border="0" cellpadding="10">
+        <tr><td colspan="2"><b>Arquivos que você editará:</b></td></tr>
+        
+        <tr><td><code><a href="search.html">search.py</a></code></td>
+        <td>Onde todos os seus algoritmos de pesquisa residirão.</td></tr>
+        
+        <tr><td><code><a href="searchAgents.html">searchAgents.py</a></code></td>
+        <td>Onde todos os seus agentes baseados em pesquisa residirão.</td></tr>
+      
+      
+        <tr><td colspan="2"><b>Arquivos que você pode querer ver:</b></td></tr>
+        
+        <tr><td><code><a href="pacman.html">pacman.py</a></code></td>
+        <td>O arquivo principal que roda os jogos do Pac-Man. Este arquivo descreve um tipo Pac-Man GameState, que você usa neste projeto.</td></tr>
+      
+        <tr><td><code><a href="game.html">game.py</a></code></td>
+        <td>A lógica por trás de como o mundo Pac-Man funciona. Este arquivo descreve vários tipos de suporte como AgentState, Agent, Direction e Grid.</td></tr>
+      
+        <tr><td><code><a href="util.html">util.py</a></code></td>
+        <td>Estruturas de dados úteis para implementar algoritmos de busca.</td></tr>
+        
+      
+        <tr><td colspan="2"><b>Arquivos de suporte que você pode ignorar:</b></td></tr>
+      
+        <tr><td><code><a href="graphicsDisplay.html">graphicsDisplay.py</a></code></td>
+        <td>Gráficos para Pac-Man</td></tr>
+          
+          <tr><td><code><a href="graphicsUtils.html">graphicsUtils.py</a></code></td>
+        <td>Suporte para gráficos Pac-Man</td></tr>
+      
+        <tr><td><code><a href="textDisplay.html">textDisplay.py</a></code></td>
+        <td>Gráficos ASCII para Pac-Man</td></tr>  
+      
+          <tr><td><code><a href="ghostAgents.html">ghostAgents.py</a></code></td>
+        <td>Agentes para controlar fantasmas</td></tr>
+      
+          <tr><td><code><a href="keyboardAgents.html">keyboardAgents.py</a></code></td>
+        <td>Interfaces de teclado para controlar o Pac-Man</td></tr>
+      
+          <tr><td><code><a href="layout.html">layout.py</a></code></td>
+        <td>Código para ler arquivos de layout e armazenar seu conteúdo</td></tr>  
+      </table>
+
+      <p>
+        <p><strong>O que enviar:</strong>Você vai preencher porções de <code><a href="search.html">search.py</a></code> and <code><a href="searchAgents.html">searchAgents.py</a></code> durante a atribuição. Você deve enviar esses dois arquivos (somente) junto com um <code>partners.txt</code> Arquivo. Tipo<code>enviar p1</code> para enviar seu código. Aqui estão <a href="../../submission_instructions.html">instruções para enviar</a> e configurar sua conta. </p>
+        
+        <p><strong> Avaliação:</strong> Seu código será autoclassificado para fins técnicos correção. Por favor <em> não faça</em> altere os nomes de quaisquer funções ou classes fornecidas dentro do código, ou você causará estragos no autograder. No entanto, a correção de sua implementação - não a saída do autoclassificador - será o juiz final de sua pontuação. Se necessário, revisaremos e avaliaremos as tarefas individualmente para garantir que você receba o devido crédito pelo seu trabalho.
+        
+        <p><strong>Desonestidade Acadêmica:</strong> Verificaremos seu código em relação a outros envios na classe para redundância lógica. Se você copiar o código de outra pessoa e enviá-lo com pequenas alterações, saberemos. Esses detectores de trapaça são muito difíceis de enganar, então, por favor, não tente. Confiamos em todos vocês para enviar apenas seu próprio trabalho; <em>Por Favor</em> não nos decepcione. Se você fizer isso, buscaremos as consequências mais fortes disponíveis para nós.
+        
+        <p><strong>Conseguindo ajuda:</strong> Você não está sozinho! Se você ficar preso em alguma coisa, entre em contato com a equipe do curso para obter ajuda. O horário de expediente, a seção e o grupo de notícias estão lá para seu suporte; por favor, use-os. Se você não puder comparecer ao nosso horário de atendimento, avise-nos e agendaremos mais. Queremos que esses projetos sejam gratificantes e instrutivos, não frustrantes e desmoralizantes. Mas, não sabemos quando ou como ajudar, a menos que você peça. Mais um conselho: se você não sabe o que uma variável faz ou que tipo de valores ela recebe, imprima-a.
+        
+        <h3> Bem vindo ao Pac-Man </h3>
+        Após baixar o código (<a href="search.zip">search.zip</a>),descompactá-lo e mudar para o <em>search</em> diretório, você poderá jogar um jogo de Pac-Man digitando o seguinte na linha de comando:
+        
+        <pre>python pacman.py</pre>
+        
+        Nota: se você receber mensagens de erro relacionadas ao python-to, use seu gerenciador de pacotes para instalar <i>python-tk</i>, ou veja <a href=http://tkinter.unpythonic.net/wiki/How_to_install_Tkinter>esta página</a> para instruções mais detalhadas.
+        
+        Pac-Man vive em um mundo azul brilhante de corredores tortuosos e saborosas guloseimas redondas. Navegar por este mundo com eficiência será o primeiro passo de Pac-Man para dominar seu domínio. 
+        
+        <p> O agente mais simples do <a href="searchAgents.html">searchAgents.py</a> é chamado de <code>GoWestAgent</code>,que sempre vai para o oeste (um agente reflexo trivial). Este agente pode ocasionalmente ganhar:
+        
+        <pre>python pacman.py --layout testMaze --pacman GoWestAgent</pre>
+        
+        Mas, as coisas ficam feias para este agente quando o giro é necessário:
+        
+        <pre>python pacman.py --layout tinyMaze --pacman GoWestAgent</pre>
+        
+        Se o pacman travar, você pode sair do jogo digitando CTRL-c no seu terminal.
+        
+        Em breve, seu agente resolverá não só <code>tinyMaze</code>, mas qualquer labirinto que você quiser.
+        
+        Observe que <code><a href="pacman.html">pacman.py</a></code> suporta uma série de opções que podem ser expressas de uma maneira longa (e.g., <code>--layout</code>) ou um caminho curto (e.g., <code>-l</code>). Você pode ver a lista de todas as opções e seus valores padrão por meio de:
+        
+        <pre>python pacman.py -h</pre>
+        
+        Além disso, todos os comandos que aparecem neste projeto também aparecem em <a href="Comandos.txt">Comandos.txt</a>, para copiar e colar facilmente. No UNIX/Mac OS X, você pode até executar todos esses comandos em ordem com <code>bash Comandos.txt</code>.
+        
+        <h3> Encontrando um ponto fixo de comida usando algoritmos de pesquisa </h3>
+        
+       
+      Dentro <code><a href="searchAgents.html">searchAgents.py</a></code>, você encontrará um totalmente implementado <code>SearchAgent</code>,que planeja um caminho pelo mundo de Pac-Man e depois executa esse caminho passo a passo. Os algoritmos de busca para formular um plano não são implementados - esse é o seu trabalho. À medida que você trabalha com as seguintes perguntas, você pode precisar consultar este <a href="#Glossary">glossário de objetos no código</a>.
+        
+        Primeiro, teste se o <code>SearchAgent</code> está funcionando corretamente executando:
+        
+        <pre>python pacman.py -l tinyMaze -p SearchAgent -a fn=tinyMazeSearch</pre>
+        
+        O comando acima informa o <code>SearchAgent</code> usar <code>tinyMazeSearch</code> como seu algoritmo de busca, que é implementado em <code><a href="search.html">search.py</a></code>. Pac-Man deve navegar pelo labirinto com sucesso.
+        
+        <p>Agora é hora de escrever funções de pesquisa genéricas completas para ajudar o Pac-Man a planejar rotas! O pseudocódigo para os algoritmos de pesquisa que você escreverá pode ser encontrado nos slides da aula e no livro didático. Lembre-se de que um nó de pesquisa deve conter não apenas um estado, mas também as informações necessárias para reconstruir o caminho (plano) que chega a esse estado.  
+        
+        <p><em>Nota importante:</em> Todas as suas funções de pesquisa precisam retornar uma lista de <em>ações</em> que conduzirá o agente desde o início até o objetivo. Todas essas ações têm que ser movimentos legais (direções válidas, sem mover-se através de paredes).
+        
+        <p><em>Dica:</em> Cada algoritmo é muito semelhante. Algoritmos para DFS, BFS, UCS e A* diferem apenas nos detalhes de como a franja é gerenciada. Portanto, concentre-se em acertar o DFS e o resto deve ser relativamente simples. De fato, uma implementação possível requer apenas um único método de pesquisa genérico que é configurado com uma estratégia de enfileiramento específica do algoritmo. (Sua necessidade de implementação<em>não</em>ser desta forma para receber crédito total). 
+        
+        <p><em>Dica:</em>Certifique-se de verificar o <code>Stack, Queue</code> e <code>PriorityQueue</code> tipos fornecidos a você em <code><a href="util.html">util.py</a></code>!</p><br>
+        
+        <p><em><strong>Atividade 01:</strong></em>Implemente o algoritmo de busca em profundidade (DFS) no
+        <code>depthFirstSearch</code> funcionar em <code><a href="search.html">search.py</a></code>. </p><br>
+        
+        <p>Seu código deve encontrar rapidamente uma solução para:</p><br>
+        
+        <pre>python pacman.py -l tinyMaze -p SearchAgent</pre>
+        
+        <pre>python pacman.py -l mediumMaze -p SearchAgent</pre>
+        
+        <pre>python pacman.py -l bigMaze -z .5 -p SearchAgent</pre>
+        
+        O tabuleiro do Pac-Man mostrará uma sobreposição dos estados explorados e a ordem em que eles foram explorados (vermelho mais claro significa exploração anterior). A ordem de exploração é o que você esperava? O Pac-Man realmente vai a todos os quadrados explorados em seu caminho para o gol? 
+        
+        <p> <em>Dica:</em> Se você usar um <code>Stack</code> como sua estrutura de dados, a solução encontrada pelo seu algoritmo DFS para<code>mediumMaze</code> deve ter um comprimento de 130 (desde que você empurre sucessores na franja na ordem fornecida por getSuccessors; você pode obter 244 se você empurrá-los na ordem inversa). Esta é uma solução de menor custo? Se não, pense no que a pesquisa em profundidade está fazendo de errado.</p><br>
+        
+        <p><em><strong>Atividade 02:</strong></em> Implemente o algoritmo de busca em largura (BFS) no
+        <code>breadthFirstSearch</code> funcionar em<code><a href="search.html">search.py</a></code>. Novamente, escreva um algoritmo de busca de grafos que evite expandir quaisquer estados já visitados. Teste seu código da mesma maneira que fez para a pesquisa em profundidade.
+        
+        <pre>python pacman.py -l mediumMaze -p SearchAgent -a fn=bfs</pre>
+        
+        <pre>python pacman.py -l bigMaze -p SearchAgent -a fn=bfs -z .5</pre>
+        
+        O BFS encontra uma solução de menor custo? Se não, verifique sua implementação.
+        Se o Pac-Man se mover muito devagar para você, tente a opção <code>--frameTime 0</code>.
+        
+        <p> <em>Nota:</em> Se você escreveu seu código de pesquisa genericamente, seu código deve funcionar igualmente bem para o problema de pesquisa de oito quebra-cabeças sem nenhuma alteração.</p> 
+        
+        <pre>python eightpuzzle.py</pre>
+        
+        <h3> Variando a função de custo </h3>
+        
+        Embora o BFS encontre um caminho de menor número de ações para o objetivo, podemos querer encontrar caminhos que sejam "melhores" em outros sentidos. Considerar<code><a href="Project/layouts/mediumDottedMaze.lay"> mediumDottedMaze</a></code> e <code><a href="Project/layouts/mediumScaryMaze.lay">mediumScaryMaze</a></code>.  Alterando a função de custo, podemos encorajar o Pac-Man a encontrar caminhos diferentes. Por exemplo, podemos cobrar mais por passos perigosos em áreas infestadas de fantasmas ou menos por passos em áreas ricas em alimentos, e um agente Pac-Man racional deve ajustar seu comportamento em resposta.</p>
+
+          <h3> Encontrando todos os cantos </h3>
+        
+        <p> O verdadeiro poder de A* só será aparente com um problema de busca mais desafiador. Agora, é hora de formular um novo problema e projetar uma heurística para ele.</p>  
+            
+        <p>Dentro <em>labirintos de canto</em>, há quatro pontos, um em cada canto. Nosso novo problema de busca é encontrar o caminho mais curto através do labirinto que toca todos os quatro cantos (se o labirinto realmente tem comida lá ou não). Observe que para alguns labirintos como <a href="Project/layouts/tinyCorners.lay">tinyCorners</a>, o caminho mais curto nem sempre vai primeiro para a comida mais próxima! <em>Dica</em>: o caminho mais curto através<code>tinyCorners</code>dá 28 passos.
+              
+          Para receber o crédito total, você precisa definir uma representação abstrata do estado que <em> não</em> ecodifique informações irrelevantes (como a posição dos fantasmas, onde está a comida extra, etc.). Em particular, não use um Pac-Man<code>GameState</code>como um estado de pesquisa. Seu código será muito, muito lento se você fizer isso (e também errado).
+        
+        <p> <em>Dica:</em> As únicas partes do estado do jogo que você precisa referenciar em sua implementação são a posição inicial do Pac-Man e a localização dos quatro cantos.</p>  
+        
+        <p>Nossa implementação de <code>breadthFirstSearch</code> expande pouco menos de 2.000 nós de pesquisa em <a href="Project/layouts/mediumCorners.lay">mediumCorners</a>. No entanto, a heurística (usada com a pesquisa A*) pode reduzir a quantidade de pesquisa necessária.
+
+        <h3> Comendo todos os pontos</h3>
+        
+        Agora vamos resolver um problema de busca difícil: comer toda a comida do Pac-Man no menor número de passos possível. Para isso, precisaremos de uma nova definição de problema de busca que formaliza o problema de limpeza de alimentos:<code>FoodSearchProblem</code> dentro <code><a href="searchAgents.html">searchAgents.py</a></code> (implementado para você). Uma solução é definida como um caminho que coleta todos os alimentos do mundo Pac-Man. Para o presente projeto, as soluções não levam em consideração fantasmas ou pellets de energia; as soluções dependem apenas da colocação de paredes, comida normal e Pac-Man. (Claro que fantasmas podem arruinar a execução de uma solução! Falaremos sobre isso no próximo projeto.) Se você escreveu seus métodos gerais de pesquisa corretamente, <code>A*</code> com uma heurística nula (equivalente à busca de custo uniforme) deve encontrar rapidamente uma solução ótima para <a href="Project/layouts/testSearch.lay">testSearch</a> sem alteração de código de sua parte (custo total de 7).
+        
+        <pre>python pacman.py -l testSearch -p AStarFoodSearchAgent</pre>
+        
+        <p> <em>Nota:</em> <code>AStarFoodSearchAgent</code> é um atalho para<code>-p SearchAgent -a fn=astar,prob=FoodSearchProblem,heuristic=foodHeuristic</code>.
+        
+        <p>Você deve descobrir que o UCS começa a desacelerar mesmo para o aparentemente simples <code><a href="Project/layouts/testSearch.lay">tinySearch</a></code>.  Como referência, nossa implementação leva 2,5 segundos para encontrar um caminho de comprimento 27 após expandir 4902 nós de pesquisa.</p><br>
+        
+        <table align="center" border="1" cellspacing="1" cellpadding="5">
+            <tr><th>Menos nós do que:</th><th>Pontos</th></tr>
+            <tr><td>15000</td><td>1</td></tr>
+            <tr><td>12000</td><td>2</td></tr>
+            <tr><td>9000</td><td>3 (Médio)</td></tr>
+            <tr><td>7000</td><td>4 (Difícil)</td></tr>
+        </table> <br>
+        
+        <p> Se sua heurística for inadmissível, você receberá <em>no</em> rédito, então tome cuidado! Pense na admissibilidade com cuidado, pois heurísticas inadmissíveis podem produzir buscas rápidas e até caminhos ótimos. Você pode resolver<code><a href="Project/layouts/mediumSearch.lay">mediumSearch</a></code> em pouco tempo? Se sim, estamos muito, muito impressionados ou sua heurística é inadmissível.  
+        
+        <p> <em>Admissibilidade vs. Consistência?</em>Tecnicamente, a admissibilidade não é suficiente para garantir a correção na pesquisa de gráficos -- você precisa de uma condição mais forte de consistência. Para que uma heurística seja consistente, ela deve sustentar que, se uma ação custou<em>c</em>, então tomar essa ação só pode causar uma queda na heurística de no máximo <em>c</em>. Se sua heurística for não apenas admissível, mas também consistente, você receberá 1 ponto adicional para esta questão.</p>
+
+        <p> Quase sempre, as heurísticas admissíveis também são consistentes, especialmente se forem derivadas de relaxações de problemas. Portanto, é provavelmente mais fácil começar fazendo um brainstorming de heurísticas admissíveis. Uma vez que você tenha uma heurística admissível que funcione bem, você também pode verificar se ela é realmente consistente. Às vezes, a inconsistência pode ser detectada verificando se suas soluções retornadas não estão diminuindo no valor f. Além disso, se UCS e A* retornarem caminhos de comprimentos diferentes, sua heurística será inconsistente. Este material é complicado. Se precisar de ajuda, não hesite em perguntar à equipe do curso!
+        </p>
+            
+        <h3> Pesquisa abaixo do ideal </h3>
+        
+        <p> Às vezes, mesmo com A* e uma boa heurística, é difícil encontrar o caminho ideal entre todos os pontos. Nesses casos, ainda gostaríamos de encontrar um caminho razoavelmente bom, rapidamente. Nesta seção, você escreverá um agente que sempre come o ponto mais próximo. <code>ClosestDotSearchAgent</code> é implementado para você em <code><a href="searchAgents.html">searchAgents.py</a></code>, mas está faltando uma função chave que encontra um caminho para o ponto mais próximo.</p>
+                         
+        <h3> <a name="Glossary">Glossário de Objetos</a> </h3>
+        
+        <p>Aqui está um glossário dos principais objetos na base de código relacionados a problemas de pesquisa, para sua referência:</p>
+        
+          <dl>
+            <dt><code>SearchProblem (search.py)</code></dt>
+          <dd> Um SearchProblem é um objeto abstrato que representa o espaço de estados, a função sucessora, os custos e o estado objetivo de um problema. Você irá interagir com qualquer SearchProblem apenas através dos métodos definidos na parte superior do <code><a href="search.html">search.py</a></code></dd>
+          <dt><code>PositionSearchProblem (searchAgents.py)</code></dt>
+            <dd>Um tipo específico de SearchProblem com o qual você trabalhará --- corresponde à busca de um único pellet em um labirinto. </dd>
+
+          <dt><code>CornersProblem (searchAgents.py)</code></dt>
+          <dd>Um tipo específico de SearchProblem que você definirá --- corresponde à busca de um caminho pelos quatro cantos de um labirinto.</dd>
+          <dt><code>FoodSearchProblem (searchAgents.py)</code></dt>
+          <dd>Um tipo específico de SearchProblem com o qual você trabalhará --- corresponde a procurar uma maneira de comer todos os pellets em um labirinto.</dd><br>
+
+        <dt>Função de pesquisa</dt>
+        <dd>Uma função de pesquisa é uma função que recebe uma instância de SearchProblem como parâmetro, executa algum algoritmo e retorna uma sequência de ações que levam a um objetivo. Exemplos de funções de pesquisa são <code>depthFirstSearch</code> e <code>breadthFirstSearch</code>,que você tem que escrever. Você é fornecido<code>tinyMazeSearch</code> que é uma função de pesquisa muito ruim que só funciona corretamente em <code>tinyMaze</code>
+        <dt><code>SearchAgent</code></dt>
+        <dd><code>SearchAgent</code> é uma classe que implementa um Agente (um objeto que interage com o mundo) e faz seu planejamento através de uma função de busca. O <code>SearchAgent</code> primeiro usa a função de pesquisa fornecida para fazer um plano de ações a serem tomadas para atingir o estado da meta e, em seguida, executa as ações uma de cada vez.</dd>
+          </dl> <br> <br> 
+
+          <footer>
+            <center>
+                    <div class="footer-copyright">
+                            <div class="container"> 
+                          <strong>Copyright © 2022 Todos os direitos reservados.</strong>  
+                            </div>
+                          </div>
+            </center>
+        </footer>
+    
+</body>
+</html>
